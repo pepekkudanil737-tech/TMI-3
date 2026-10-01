@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMK Cibitung 1 - TMI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+            scroll-behavior: smooth;
+        }
+        body {
+            background: #f0f4f8;
+        }
+
+        /* PASSWORD */
+        #passwordPage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #passwordPage.hide {
+            display: none;
+        }
+        .box-pass {
+            background: white;
+            padding: 40px 35px;
+            border-radius: 20px;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .box-pass .icon {
+            font-size: 60px;
+        }
+        .box-pass h2 {
+            color: #1a237e;
+            margin: 10px 0 5px;
+        }
+        .box-pass p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .box-pass input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            font-size: 18px;
+            text-align: center;
+            letter-spacing: 6px;
+            font-weight: bold;
+            outline: none;
+        }
+        .box-pass input:focus {
+            border-color: #ff6f00;
+        }
+        .box-pass .btn-pass {
+            width: 100%;
+            margin-top: 15px;
+            padding: 14px;
+            background: #ff6f00;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .box-pass .btn-pass:hover {
+            background: #e65100;
+        }
+        .box-pass .error {
+            color: #e94560;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+        .box-pass .error.show {
+            display: block;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            color: white;
+            padding: 15px 0;
+            border-bottom: 4px solid #ff6f00;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        .header .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .logo span {
+            color: #ff6f00;
+        }
+        .logo small {
+            display: block;
+            font-size: 11px;
+            color: #90caf9;
+            font-weight: 300;
+        }
+        .nav {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            color: #eee;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            padding: 5px 0;
+            transition: 0.3s;
+        }
+        .nav a:hover {
+            color: #ff6f00;
+            border-bottom-color: #ff6f00;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            color: white;
+            padding: 70px 0;
+            text-align: center;
+            border-bottom: 4px solid #ff6f00;
+        }
+        .hero h1 {
+            font-size: 44px;
+        }
+        .hero h1 span {
+            color: #ff6f00;
+        }
+        .hero .sub {
+            font-size: 26px;
+            color: #ff6f00;
+            font-weight: 700;
+            margin: 8px 0;
+        }
+        .hero .akre {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 17px;
+            color: #4caf50;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .hero p {
+            max-width: 650px;
+            margin: 0 auto 25px;
+            font-size: 17px;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: #ff6f00;
+            color: white;
+            padding: 13px 35px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 111, 0, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background: #e65100;
+            transform: scale(1.05);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ff6f00;
+        }
+        .btn-outline:hover {
+            background: #ff6f00;
+        }
+
+        /* SECTION */
+        .section {
+            padding: 55px 0;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .section-title span {
+            color: #ff6f00;
+        }
+        .section-sub {
+            text-align: center;
+            color: #666;
+            margin-bottom: 35px;
+            font-size: 16px;
+        }
+
+        /* GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            cursor: pointer;
+            border-bottom: 4px solid transparent;
+            transition: 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            border-bottom-color: #ff6f00;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+        .card .icon {
+            font-size: 44px;
+            margin-bottom: 12px;
+        }
+        .card h3 {
+            font-size: 19px;
+            margin-bottom: 8px;
+        }
+        .card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* SISWA */
+        .siswa-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        .siswa-card {
+            background: white;
+            padding: 18px;
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .siswa-card:hover {
+            transform: translateY(-4px);
+            border: 2px solid #ff6f00;
+        }
+        .siswa-card .avatar {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a237e, #ff6f00);
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+        }
+        .siswa-card h4 {
+            font-size: 15px;
+        }
+        .siswa-card p {
+            color: #888;
+            font-size: 13px;
+        }
+
+        /* GALERI */
+        .galeri-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+        .galeri-item {
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            height: 160px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: 0.3s;
+            text-align: center;
+            padding: 10px;
+        }
+        .galeri-item:hover {
+            transform: scale(1.03);
+            border-color: #ff6f00;
+            box-shadow: 0 8px 30px rgba(255, 111, 0, 0.3);
+        }
+
+        /* ===== HALAMAN INFO TMI (LAYAR KEDUA) ===== */
+        #halamanInfoTMI {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f0f4f8;
+            z-index: 99999;
+            overflow-y: auto;
+            padding: 30px 20px;
+        }
+        #halamanInfoTMI.show {
+            display: block;
+        }
+        .info-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .info-container .btn-close-info {
+            position: sticky;
+            top: 10px;
+            float: right;
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+            z-index: 10;
+        }
+        .info-container .btn-close-info:hover {
+            background: #c73652;
+            transform: scale(1.05);
+        }
+        .info-container h1 {
+            color: #1a237e;
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+        .info-container h1 span {
+            color: #ff6f00;
+        }
+        .info-container .sub-info {
+            color: #ff6f00;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .info-container .deskripsi-info {
+            color: #444;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #ff6f00;
+            transition: 0.3s;
+        }
+        .info-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        .info-card .icon-info {
+            font-size: 32px;
+        }
+        .info-card h3 {
+            color: #1a237e;
+            font-size: 17px;
+            margin: 8px 0 5px;
+        }
+        .info-card p {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .info-card .detail {
+            color: #888;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #1a237e;
+            color: #aaa;
+            padding: 40px 0;
+            border-top: 4px solid #ff6f00;
+            margin-top: 30px;
+        }
+        .footer .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+        }
+        .footer h4 {
+            color: white;
+            margin-bottom: 12px;
+        }
+        .footer a {
+            color: #aaa;
+            display: block;
+            margin: 5px 0;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            color: #ff6f00;
+        }
+        .footer .copyright {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .footer .copyright span {
+            color: #ff6f00;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 30px;
+            }
+            .hero .sub {
+                font-size: 20px;
+            }
+            .section-title {
+                font-size: 26px;
+            }
+            .nav {
+                gap: 10px;
+            }
+            .nav a {
+                font-size: 12px;
+            }
+            .logo {
+                font-size: 20px;
+            }
+            .info-container {
+                padding: 20px;
+            }
+            .info-container h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== PASSWORD ===== -->
+    <div id="passwordPage">
+        <div class="box-pass">
+            <div class="icon">🔐</div>
+            <h2>Akses Terbatas</h2>
+            <p>Masukkan password untuk mengakses website SMK Cibitung 1</p>
+            <input type="password" id="passInput" placeholder="●●●●●" maxlength="10" autofocus>
+            <button class="btn-pass" onclick="cekPass()">🔓 Buka</button>
+            <p class="error" id="errorMsg">❌ Password salah! Coba lagi.</p>
+        </div>
+    </div>
+
+    <!-- ===== HALAMAN INFO TMI (LAYAR KEDUA) ===== -->
+    <div id="halamanInfoTMI">
+        <div class="info-container">
+            <button class="btn-close-info" onclick="tutupInfoTMI()">✕ Tutup</button>
+            
+            <h1>⚙️ <span>TEKNIK MEKANIK INDUSTRI</span></h1>
+            <div class="sub-info">SMK Cibitung 1 — TMI</div>
+            
+            <div class="deskripsi-info">
+                <strong>Teknik Mekanik Industri (TMI)</strong> adalah jurusan yang mempelajari permesinan, 
+                manufaktur, otomasi industri, dan teknologi produksi. SMK Cibitung 1 memiliki fasilitas 
+                bengkel dan alat-alat industri yang lengkap untuk mendukung pembelajaran siswa.
+            </div>
+
+            <h2 style="color:#1a237e; margin-bottom:15px;">🔧 Alat & Bengkel TMI</h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="icon-info">⚙️</div>
+                    <h3>Mesin Bubut</h3>
+                    <p>Digunakan untuk membentuk benda kerja dengan cara diputar.</p>
+                    <div class="detail">📌 10 Unit Konvensional + 3 Unit CNC</div>
+                </div>
+                <div class="info-card">
+                    <div class="icon-info">🔩</div>
+                    <h3>Mesin Frais</h3>
+                    <p>Untuk memotong, meratakan, dan membentuk logam.</p>
+                    <div class="detail">📌 8 Unit Vertikal & Horizontal</div>
+                </div>
+                <div class="info-card">
+                    <div class="icon-info">🔄</div>
+                    <h3>Mesin Gerinda</h3>
+                    <p>Menghaluskan permukaan logam dengan presisi tinggi.</p>
+                    <div class="detail">📌 Datar, Silinder, & Tangan</div>
+                </div>
+                <div class="info-card">
+                    <div class="icon-info">🛠️</div>
+                    <h3>Mesin Bor</h3>
+                    <p>Membuat lubang pada logam dengan berbagai ukuran.</p>
+                    <div class="detail">📌 12 Unit Meja & Tangan</div>
+                </div>
+                <div class="info-card">
+                    <div class="icon-info">🔥</div>
+                    <h3>Las Listrik & OAW</h3>
+                    <p>Fasilitas las untuk menyambung logam dengan teknik SMAW, OAW, TIG.</p>
+                    <div class="detail">📌 SMAW, OAW, TIG</div>
+                </div>
+                <div class="info-card">
+                    <div class="icon-info">💻</div>
+                    <h3>CNC & CAD/CAM</h3>
+                    <p>Mesin CNC otomatis dengan software desain dan simulasi.</p>
+                    <div class="detail">📌 5 Unit CNC + Software CAD/CAM</div>
+                </div>
+                <div class="info-card">
+                    <div class="icon-info">📏</div>
+                    <h3>Alat Ukur Presisi</h3>
+                    <p>Mengukur dimensi benda kerja dengan akurasi tinggi.</p>
+                    <div class="detail">📌 Jangka Sorong, Mikrometer, Dial Gauge, Height Gauge</div>
+                </div>
+                <div class="info-card">
+                    <div class="icon-info">💨</div>
+                    <h3>Kompresor Angin</h3>
+                    <p>Membersihkan mesin dan alat dari debu dan kotoran.</p>
+                    <div class="detail">📌 3 Unit - Tekanan 10 Bar</div>
+                </div>
+            </div>
+
+            <div style="margin-top:30px; padding-top:20px; border-top:2px solid #eee; text-align:center; color:#888; font-size:14px;">
+                ⭐ SMK Cibitung 1 — Terakreditasi A ⭐
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN WEBSITE ===== -->
+    <div id="mainContent" style="display:none;">
+
+        <!-- HEADER -->
+        <header class="header" id="beranda">
+            <div class="container">
+                <div class="logo" onclick="bukaPopup('🏫 SMK CIBITUNG 1', 'SMK Cibitung 1 — Sekolah kejuruan unggulan di Cibitung, Bekasi. Terakreditasi A.')">
+                    🏫 SMK <span>CIBITUNG 1</span>
+                    <small>✦ TEKNIK MEKANIK INDUSTRI ✦</small>
+                </div>
+                <nav class="nav">
+                    <a href="#beranda">Beranda</a>
+                    <a href="#profil">Profil</a>
+                    <a href="#jurusan">Jurusan</a>
+                    <a href="#bengkel">Bengkel</a>
+                    <a href="#kelas">Kelas</a>
+                    <a href="#siswa">Siswa</a>
+                    <a href="#galeri">Galeri</a>
+                    <a href="#kontak">Kontak</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="container">
+                <h1>SMK <span>CIBITUNG 1</span></h1>
+                <div class="sub">✦ TEKNIK MEKANIK INDUSTRI ✦</div>
+                <div class="akre">⭐ TERAKREDITASI A ⭐</div>
+                <p>
+                    SMK Cibitung 1 terletak di Jl. Pendidikan No. 45, Cibitung, Kabupaten Bekasi, Jawa Barat.
+                    Sekolah ini telah <strong>terakreditasi A</strong> dan fokus pada <strong>Teknik Mekanik Industri (TMI)</strong>.
+                    Kami mencetak lulusan siap bersaing di dunia industri manufaktur dan permesinan.
+                </p>
+                <div class="btn-group">
+                    <button class="btn" onclick="bukaPopup('📋 Pendaftaran', 'Pendaftaran siswa baru SMK Cibitung 1 dibuka! Segera daftar.')">📋 Pendaftaran</button>
+                    <button class="btn btn-outline" onclick="bukaInfoTMI()">📖 Info TMI</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROFIL -->
+        <section class="section" id="profil">
+            <div class="container">
+                <h2 class="section-title">Profil <span>SMK Cibitung 1</span></h2>
+                <p class="section-sub">Sekolah Kejuruan Unggulan dengan Akreditasi A</p>
+                <div class="grid">
+                    <div class="card" onclick="bukaPopup('📍 Lokasi', 'Jl. Pendidikan No. 45, Cibitung, Kabupaten Bekasi, Jawa Barat 17520.')">
+                        <div class="icon">📍</div>
+                        <h3>Lokasi</h3>
+                        <p>Jl. Pendidikan No. 45, Cibitung, Kabupaten Bekasi</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('⭐ Akreditasi', 'SMK Cibitung 1 telah terakreditasi A oleh BAN-S/M dengan nilai sangat baik.')">
+                        <div class="icon">⭐</div>
+                        <h3>Akreditasi</h3>
+                        <p>Terakreditasi A — Nilai Sangat Baik</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('🎯 Visi', 'Menjadi SMK unggulan berbasis industri yang menghasilkan lulusan kompeten dan berkarakter.')">
+                        <div class="icon">🎯</div>
+                        <h3>Visi</h3>
+                        <p>SMK unggulan berbasis industri</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('📚 Misi', '1. Pendidikan vokasi relevan industri 4.0\n2. Karakter disiplin & inovatif\n3. Kerjasama dengan industri')">
+                        <div class="icon">📚</div>
+                        <h3>Misi</h3>
+                        <p>Vokasi industri 4.0, karakter, kerjasama</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JURUSAN -->
+        <section class="section" style="background:#fff;" id="jurusan">
+            <div class="container">
+                <h2 class="section-title">Jurusan <span>TMI</span></h2>
+                <p class="section-sub">Teknik Mekanik Industri — Satu-satunya jurusan unggulan</p>
+                <div class="grid">
+                    <div class="card" onclick="bukaPopup('⚙️ Apa itu TMI?', 'Teknik Mekanik Industri adalah jurusan yang mempelajari permesinan, manufaktur, otomasi industri, dan teknologi produksi.')">
+                        <div class="icon">⚙️</div>
+                        <h3>Apa itu TMI?</h3>
+                        <p>Permesinan, manufaktur, otomasi industri</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('🔧 Kompetensi', '1. Pemesinan\n2. Pengelasan\n3. Gambar Teknik\n4. CNC\n5. Otomasi Industri')">
+                        <div class="icon">🔧</div>
+                        <h3>Kompetensi</h3>
+                        <p>Pemesinan, Las, Gambar, CNC, Otomasi</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('🏭 Prospek Kerja', '1. Operator Mesin\n2. Teknisi Manufaktur\n3. Drafter\n4. QC\n5. Wirausaha')">
+                        <div class="icon">🏭</div>
+                        <h3>Prospek Kerja</h3>
+                        <p>Operator, Teknisi, Drafter, QC, Wirausaha</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('🤝 Kerjasama', 'SMK Cibitung 1 bekerjasama dengan PT. Toyota, PT. Astra, dan industri manufaktur di Cikarang.')">
+                        <div class="icon">🤝</div>
+                        <h3>Kerjasama</h3>
+                        <p>Toyota, Astra, Industri Cikarang</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BENGKEL -->
+        <section class="section" id="bengkel">
+            <div class="container">
+                <h2 class="section-title">🔧 Bengkel & <span>Alat TMI</span></h2>
+                <p class="section-sub">Fasilitas lengkap untuk pembelajaran Teknik Mekanik Industri</p>
+                <div style="text-align:center; margin-bottom:30px;">
+                    <button class="btn" onclick="bukaInfoTMI()">📖 Lihat Semua Alat TMI</button>
+                </div>
+                <div class="grid">
+                    <div class="card" onclick="bukaPopup('⚙️ Mesin Bubut', '10 unit konvensional + 3 unit CNC. Digunakan untuk membentuk benda kerja dengan cara diputar.')">
+                        <div class="icon">⚙️</div>
+                        <h3>Mesin Bubut</h3>
+                        <p>10 Unit + 3 CNC</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('🔩 Mesin Frais', '8 unit vertikal & horizontal. Untuk memotong, meratakan, dan membentuk logam.')">
+                        <div class="icon">🔩</div>
+                        <h3>Mesin Frais</h3>
+                        <p>8 Unit Vertikal & Horizontal</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('🔄 Mesin Gerinda', 'Gerinda datar, silinder, dan tangan. Untuk menghaluskan permukaan logam.')">
+                        <div class="icon">🔄</div>
+                        <h3>Mesin Gerinda</h3>
+                        <p>Datar, Silinder, Tangan</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('🛠️ Mesin Bor', '12 unit meja & tangan. Untuk membuat lubang pada logam.')">
+                        <div class="icon">🛠️</div>
+                        <h3>Mesin Bor</h3>
+                        <p>12 Unit Meja & Tangan</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('🔥 Las', 'Fasilitas las lengkap: SMAW, OAW, TIG.')">
+                        <div class="icon">🔥</div>
+                        <h3>Las</h3>
+                        <p>SMAW, OAW, TIG</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('💻 CNC & CAD/CAM', '5 unit mesin CNC + software CAD/CAM untuk desain dan simulasi.')">
+                        <div class="icon">💻</div>
+                        <h3>CNC & CAD/CAM</h3>
+                        <p>5 Unit CNC + Software</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('📏 Alat Ukur', 'Jangka sorong, mikrometer, dial gauge, height gauge, surface roughness tester.')">
+                        <div class="icon">📏</div>
+                        <h3>Alat Ukur Presisi</h3>
+                        <p>Jangka Sorong, Mikrometer, dll</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('💨 Kompresor', '3 unit dengan tekanan 10 bar. Untuk membersihkan mesin dan alat.')">
+                        <div class="icon">💨</div>
+                        <h3>Kompresor</h3>
+                        <p>3 Unit - 10 Bar</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KELAS -->
+        <section class="section" style="background:#fff;" id="kelas">
+            <div class="container">
+                <h2 class="section-title">Kelas <span>TMI</span></h2>
+                <p class="section-sub">Kelas unggulan Teknik Mekanik Industri</p>
+                <div class="grid">
+                    <div class="card" onclick="bukaPopup('👨‍🏫 Wali Kelas', 'Bapak Joko — Guru profesional yang selalu membimbing dan menginspirasi siswa TMI.')">
+                        <div class="icon">👨‍🏫</div>
+                        <h3>Wali Kelas</h3>
+                        <p>Bapak Joko</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('📊 Jumlah Siswa', 'Kelas TMI terdiri dari 32 siswa yang solid, kompak, dan berprestasi.')">
+                        <div class="icon">📊</div>
+                        <h3>Jumlah Siswa</h3>
+                        <p>32 Siswa</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('📅 Jadwal', 'Praktik bengkel: Selasa & Kamis | Teori: Senin, Rabu, Jumat')">
+                        <div class="icon">📅</div>
+                        <h3>Jadwal</h3>
+                        <p>Praktik Selasa & Kamis</p>
+                    </div>
+                    <div class="card" onclick="bukaPopup('🏆 Prestasi', 'Juara 1 Lomba Kompetensi Siswa (LKS) bidang Teknik Mesin tingkat Kabupaten.')">
+                        <div class="icon">🏆</div>
+                        <h3>Prestasi</h3>
+                        <p>Juara 1 LKS Kabupaten</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SISWA -->
+        <section class="section" id="siswa">
+            <div class="container">
+                <h2 class="section-title">Siswa <span>TMI</span></h2>
+                <p class="section-sub">Siswa-siswi hebat Teknik Mekanik Industri</p>
+                <div class="siswa-grid">
+                    <div class="siswa-card" onclick="bukaPopup('👨‍🎓 Ahmad', 'Siswa TMI — Hobi: Otomotif dan Teknologi')">
+                        <div class="avatar">👨‍🎓</div>
+                        <h4>Ahmad</h4>
+                        <p>TMI</p>
+                    </div>
+                    <div class="siswa-card" onclick="bukaPopup('👩‍🎓 Siti', 'Siswi TMI — Hobi: Desain dan Menggambar Teknik')">
+                        <div class="avatar">👩‍🎓</div>
+                        <h4>Siti</h4>
+                        <p>TMI</p>
+                    </div>
+                    <div class="siswa-card" onclick="bukaPopup('👨‍🎓 Budi', 'Siswa TMI — Hobi: Robotik dan Otomasi')">
+                        <div class="avatar">👨‍🎓</div>
+                        <h4>Budi</h4>
+                        <p>TMI</p>
+                    </div>
+                    <div class="siswa-card" onclick="bukaPopup('👩‍🎓 Rina', 'Siswi TMI — Hobi: Olahraga dan Menggambar')">
+                        <div class="avatar">👩‍🎓</div>
+                        <h4>Rina</h4>
+                        <p>TMI</p>
+                    </div>
+                    <div class="siswa-card" onclick="bukaPopup('👨‍🎓 Dedi', 'Siswa TMI — Hobi: Coding dan Elektronik')">
+                        <div class="avatar">👨‍🎓</div>
+                        <h4>Dedi</h4>
+                        <p>TMI</p>
+                    </div>
+                    <div class="siswa-card" onclick="bukaPopup('👩‍🎓 Maya', 'Siswi TMI — Hobi: Membaca dan Menulis')">
+                        <div class="avatar">👩‍🎓</div>
+                        <h4>Maya</h4>
+                        <p>TMI</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALERI -->
+        <section class="section" style="background:#fff;" id="galeri">
+            <div class="container">
+                <h2 class="section-title">Galeri <span>TMI</span></h2>
+                <p class="section-sub">Momen-momen seru siswa Teknik Mekanik Industri</p>
+                <div class="galeri-grid">
+                    <div class="galeri-item" onclick="bukaPopup('⚙️ Praktik Mesin', 'Siswa sedang praktik di bengkel mesin industri.')">⚙️ Praktik Mesin</div>
+                    <div class="galeri-item" onclick="bukaPopup('🔧 Bengkel TMI', 'Suasana bengkel Teknik Mekanik Industri yang lengkap.')">🔧 Bengkel TMI</div>
+                    <div class="galeri-item" onclick="bukaPopup('📚 Belajar Teori', 'Siswa mengikuti pembelajaran teori di kelas.')">📚 Belajar Teori</div>
+                    <div class="galeri-item" onclick="bukaPopup('🏆 Lomba LKS', 'Tim TMI meraih juara 1 LKS Teknik Mesin.')">🏆 Lomba LKS</div>
+                    <div class="galeri-item" onclick="bukaPopup('🏭 Kunjungan Industri', 'Kunjungan ke pabrik manufaktur di Cikarang.')">🏭 Kunjungan Industri</div>
+                    <div class="galeri-item" onclick="bukaPopup('📸 Foto Kelas', 'Foto bersama siswa TMI sebelum ujian.')">📸 Foto Kelas</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer" id="kontak">
+            <div class="container">
+                <div>
+                    <h4>🏫 SMK CIBITUNG 1</h4>
+                    <p style="color:#90caf9;font-size:14px;line-height:1.8;">
+                        Jl. Pendidikan No. 45<br>Cibitung, Bekasi<br>Jawa Barat 17520<br>Telp: (021) 1234-5678<br>⭐ Akreditasi A
+                    </p>
+                </div>
+                <div>
+                    <h4>Informasi</h4>
+                    <a onclick="bukaPopup('📋 Pendaftaran', 'Pendaftaran siswa baru SMK Cibitung 1 dibuka!')">Pendaftaran</a>
+                    <a onclick="bukaPopup('📅 Kalender', 'Kalender akademik 2026/2027 sudah tersedia.')">Kalender Akademik</a>
+                    <a onclick="bukaPopup('🎓 Beasiswa', 'Tersedia beasiswa prestasi dan kurang mampu.')">Beasiswa</a>
+                </div>
+                <div>
+                    <h4>Jurusan</h4>
+                    <a onclick="bukaPopup('⚙️ TMI', 'Teknik Mekanik Industri — permesinan, manufaktur, otomasi.')">⚙️ TMI</a>
+                </div>
+                <div>
+                    <h4>Media Sosial</h4>
+                    <a onclick="bukaPopup('📷 Instagram', 'Follow Instagram @smkcibitung1')">📷 Instagram</a>
+                    <a onclick="bukaPopup('📘 Facebook', 'Like Facebook SMK Cibitung 1')">📘 Facebook</a>
+                    <a onclick="bukaPopup('▶️ YouTube', 'Subscribe YouTube SMK Cibitung 1')">▶️ YouTube</a>
+                </div>
+                <div class="copyright">
+                    &copy; 2026 <strong style="color:#ff6f00;">SMK CIBITUNG 1</strong> — All Rights Reserved.<br>
+                    Dibuat oleh <span onclick="bukaPopup('✦ TarzXit ✦', 'Website dibuat oleh TarzXit — Developer handal.')">✦ TarzXit ✦</span><br>
+                    Jurusan <strong style="color:#ff6f00;">TEKNIK MEKANIK INDUSTRI (TMI)</strong> — Terakreditasi A
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== POPUP ===== -->
+    <div class="popup-overlay" id="popupOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:99999; align-items:center; justify-content:center;">
+        <div class="popup-box" style="background:white; padding:35px 30px; border-radius:16px; max-width:380px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+            <h2 id="popupTitle" style="color:#1a237e; margin-bottom:12px;">Info</h2>
+            <p id="popupText" style="color:#555; margin-bottom:20px; line-height:1.6; font-size:15px;">Deskripsi</p>
+            <button class="close-btn" onclick="tutupPopup()" style="background:#ff6f00; color:white; border:none; padding:12px 30px; border-radius:50px; font-weight:700; cursor:pointer; font-size:15px; transition:0.3s;">Tutup</button>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPT ===== -->
+    <script>
+        // ===== PASSWORD =====
+        function cekPass() {
+            var input = document.getElementById('passInput');
+            var error = document.getElementById('errorMsg');
+            var pass = '123';
+
+            if (input.value === pass) {
+                document.getElementById('passwordPage').classList.add('hide');
+                document.getElementById('mainContent').style.display = 'block';
+                error.classList.remove('show');
+            } else {
+                error.classList.add('show');
+                input.value = '';
+                input.focus();
+                setTimeout(function() {
+                    error.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        document.getElementById('passInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                cekPass();
+            }
+        });
+
+        // ===== POPUP KECIL =====
+        function bukaPopup(judul, isi) {
+            document.getElementById('popupTitle').textContent = judul;
+            document.getElementById('popupText').textContent = isi;
+            document.getElementById('popupOverlay').style.display = 'flex';
+        }
+
+        function tutupPopup() {
+            document.getElementById('popupOverlay').style.display = 'none';
+        }
+
+        document.getElementById('popupOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                tutupPopup();
+            }
+        });
+
+        // ===== HALAMAN INFO TMI (LAYAR KEDUA) =====
+        function bukaInfoTMI() {
+            document.getElementById('halamanInfoTMI').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function tutupInfoTMI() {
+            document.getElementById('halamanInfoTMI').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+
+</body>
+</html>
